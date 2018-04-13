@@ -46,15 +46,6 @@ common:
 	# ADDON_LIBS_EXCLUDE =
 	
 linux64:
-	# binary libraries, these will be usually parsed from the file system but some 
-	# libraries need to passed to the linker in a specific order/
-	# 
-	# For example in the ofxOpenCV addon we do something like this:
-	#
-	# ADDON_LIBS =
-	# ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_legacy.a
-	# ADDON_LIBS += libs/opencv/lib/linuxarmv6l/libopencv_calib3d.a
-	# ...
 linux:
 win_cb:
 linuxarmv6l:

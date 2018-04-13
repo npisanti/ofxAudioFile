@@ -5,9 +5,17 @@
 void ofApp::setup(){
     ofBackground( 0 );
     
-    audiofile.load( "data/tubophone.mp3");
-    //audiofile.load( "data/tubophone.wav"); // mono wav source file
-    //audiofile.load( "data/tubophone.ogg"); // ogg/vorbis
+    //std::string filepath = "data/tubophone.mp3";
+    //std::string filepath = "data/tubophone.wav"; // mono wav source file
+    //std::string filepath = "data/tubophone.ogg"; // ogg/vorbis
+    std::string filepath = "data/tubophone.flac"; // FLAC
+    
+    if( ofFile::doesFileExist( filepath, false ) ){        
+        audiofile.load( filepath );        
+    }else{
+        ofLogError()<<"input file does not exists";
+    }
+ 
 }
 
 //--------------------------------------------------------------
