@@ -33,10 +33,17 @@ public:
     void    setVerbose(bool verbose);
 
     /*!
-    @brief return the path of loaded file, or contains diagnostic strings if a file is not loaded
+    @brief returns the path of loaded file, or contains diagnostic strings if a file is not loaded
     */  
     std::string path() const {
         return filePath;
+    }
+
+    /*!
+    @brief returns a pointer to the buffer, use with caution! the internal buffer is initializated to nullptr
+    */  
+    float * data(){
+        return buffer;
     }
 
     /*!
