@@ -10,6 +10,8 @@
 #define DR_FLAC_IMPLEMENTATION
 #include "../libs/dr_flac.h"
 
+#include "../libs/stb_vorbis.h"
+
 #include <algorithm>
 
 ofxAudioFile::ofxAudioFile()  {
@@ -172,6 +174,28 @@ void ofxAudioFile::load_flac( std::string path ){
     }
 }
 
+
 void ofxAudioFile::load_ogg( std::string path ){
-    std::cout<<"[ERROR] file extension loading still to implement, blame the coder\n";
+
+    short int *decoded;
+    int channels, len, sr;
+    len = stb_vorbis_decode_filename(path.c_str(), &channels, &sr, &decoded);
+
+    if(len>0){
+        buffer = new float[len];
+        
+        for( int n=0; n<len; ++n ){
+            buffer[n] = static_cast<float>( decoded[n]) / 32768.0f;
+        }
+        
+        this->sampleRate = sr;
+        this->buffersize = len;
+        this->nchannels = channels;
+        this->slength = this->buffersize / this->nchannels;
+        this->filePath = path;
+    }else{
+        std::cout<<"[ERROR] ofxAudioFile error loading ogg/vorbis file\n";
+    }
+
+    delete decoded;
 }
