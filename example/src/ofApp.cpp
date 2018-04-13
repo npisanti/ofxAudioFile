@@ -3,19 +3,22 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+
     ofBackground( 0 );
-    
-    //std::string filepath = "data/tubophone.mp3";
-    //std::string filepath = "data/tubophone.wav"; // mono wav source file
-    //std::string filepath = "data/tubophone.ogg"; // ogg/vorbis
-    std::string filepath = "data/tubophone.flac"; // FLAC
-    
-    if( ofFile::doesFileExist( filepath, false ) ){        
-        audiofile.load( filepath );        
+
+    //std::string filepath = ofToDataPath("tubophone.wav"); // mono original file
+    //std::string filepath = ofToDataPath("tubophone.mp3"); // at the moment mp3 isn't working on ARM
+    std::string filepath = ofToDataPath("tubophone.ogg"); // ogg/vorbis
+    //std::string filepath = ofToDataPath("tubophone.flac"); // FLAC
+
+    if( ofFile::doesFileExist( filepath ) ){
+        audiofile.load( filepath );
+        if (!audiofile.loaded()){
+            ofLogError()<<"error loading file, double check the file path";
+        }
     }else{
         ofLogError()<<"input file does not exists";
     }
- 
 }
 
 //--------------------------------------------------------------
