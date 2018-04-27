@@ -10,6 +10,7 @@ class ofApp: public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+        void exit();
 		
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -22,5 +23,9 @@ class ofApp: public ofBaseApp{
 		void gotMessage(ofMessage msg);
         
         ofxAudioFile audiofile;
-		
+        
+        double playhead;
+        std::atomic<double> playheadControl;
+        double step;
+        void audioOut(ofSoundBuffer & buffer);		
 };
