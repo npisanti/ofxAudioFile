@@ -71,7 +71,7 @@ void ofApp::draw(){
     
     ofDrawBitmapString( audiofile.path(), 10, 20 );
 
-    ofDrawBitmapString ( "press L to load a sample", 10, ofGetHeight()-20);    
+    ofDrawBitmapString ( "press SPACEBAR to play, press L to load a sample", 10, ofGetHeight()-20);    
 }
 
 //--------------------------------------------------------------
@@ -91,7 +91,7 @@ void ofApp::audioOut(ofSoundBuffer & buffer){
         if( n < audiofile.length()-1 ){
             
             for( size_t k=0; k<buffer.getNumChannels(); ++k){
-                if( k<audiofile.channels() ){
+                if( k < audiofile.channels() ){
                     float fract = playhead - (double) n;
                     float s0 = audiofile.sample( n, k );
                     float s1 = audiofile.sample( n+1, k );
