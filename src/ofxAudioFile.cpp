@@ -106,7 +106,7 @@ void ofxAudioFile::load( std::string path ){
     }else if ( extension == "ogg" ){
         load_ogg( path );
     }else{
-        std::cout<<"[ERROR] ofxAudioFile : "<<extension<<" is an unsupported file extension\n";
+        std::cout<<"[ofxAudioFile] ERROR : "<<extension<<" is an unsupported file extension\n";
     }
     
 }
@@ -120,7 +120,7 @@ void ofxAudioFile::load_wav( std::string path ){
     float* pSampleData =  drwav_open_and_read_file_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
 
     if ( pSampleData == NULL) {
-        std::cout<<"[ERROR] ofxAudioFile error loading wav file\n";
+        std::cout<<"[ofxAudioFile] ERROR loading wav file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
         buffer = pSampleData;
@@ -129,6 +129,7 @@ void ofxAudioFile::load_wav( std::string path ){
         this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
+        if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
     }
     
 }
@@ -141,7 +142,7 @@ void ofxAudioFile::load_mp3( std::string path ){
     float* pSampleData =  drmp3_open_and_decode_file_f32( path.c_str(), &config, &totalSampleCount);
 
     if ( pSampleData == NULL) {
-        std::cout<<"[ERROR] ofxAudioFile error loading mp3 file\n";
+        std::cout<<"[ofxAudioFile] ERROR loading mp3 file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
         buffer = pSampleData;
@@ -150,6 +151,7 @@ void ofxAudioFile::load_mp3( std::string path ){
         this->buffersize = totalSampleCount*this->nchannels;
         this->slength = totalSampleCount;
         this->filePath = path;
+        if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
     }
 }
 
@@ -162,7 +164,7 @@ void ofxAudioFile::load_flac( std::string path ){
     float* pSampleData = drflac_open_and_decode_file_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
 
     if ( pSampleData == NULL) {
-        std::cout<<"[ERROR] ofxAudioFile error loading FLAC file\n";
+        std::cout<<"[ofxAudioFile] ERROR loading FLAC file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
         buffer = pSampleData;
@@ -171,6 +173,7 @@ void ofxAudioFile::load_flac( std::string path ){
         this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
+        if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
     }
 }
 
@@ -193,8 +196,9 @@ void ofxAudioFile::load_ogg( std::string path ){
         this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
+        if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
     }else{
-        std::cout<<"[ERROR] ofxAudioFile error loading ogg/vorbis file\n";
+        std::cout<<"[ofxAudioFile] ERROR loading ogg/vorbis file\n";
     }
 
     delete decoded;
