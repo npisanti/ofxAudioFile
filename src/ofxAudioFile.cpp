@@ -183,7 +183,9 @@ void ofxAudioFile::load_ogg( std::string path ){
     short int *decoded;
     int channels, len, sr;
     len = stb_vorbis_decode_filename(path.c_str(), &channels, &sr, &decoded);
-
+    
+    len *= channels;
+    
     if(len>0){
         buffer = new float[len];
         
