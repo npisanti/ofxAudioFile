@@ -184,7 +184,7 @@ void ofxAudioFile::load_ogg( std::string path ){
     int channels, len, sr;
     len = stb_vorbis_decode_filename(path.c_str(), &channels, &sr, &decoded);
     
-    #ifndef __ARM_ARCH
+    #ifndef __ANDROID__
     len *= channels;
     #endif
     
