@@ -58,21 +58,21 @@ public:
     /*!
     @brief returns the sample rate of the sample
     */      
-    int samplerate() const {
+    uint64_t samplerate() const {
         return sampleRate;
     }
     
     /*!
     @brief returns the number of channels
     */  
-    int channels() const {
+    unsigned int channels() const {
         return nchannels;
     }
 
     /*!
     @brief returns the lenght of each sample channel
     */
-    int length() const {
+    uint64_t length() const {
         return slength;
     }
 
@@ -84,10 +84,10 @@ private:
     
     float* buffer;
     
-    int             nchannels;   
-    int             buffersize;
-    int             slength;
-    int             sampleRate;
+    unsigned int    nchannels;   
+    uint64_t        buffersize;
+    uint64_t        slength;
+    unsigned int    sampleRate;
     std::string     filePath;   
     bool            verbose;
 

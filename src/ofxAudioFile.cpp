@@ -43,7 +43,7 @@ ofxAudioFile::ofxAudioFile(const ofxAudioFile & other) {
         // TODO: catch memory exception here
         buffer = new float[other.buffersize];
         
-        for( int n=0; n<buffersize; ++n ){
+        for( size_t n=0; n<buffersize; ++n ){
             this->buffer[n] = other.buffer[n];
         }
     }
@@ -63,7 +63,7 @@ ofxAudioFile & ofxAudioFile::operator= (const ofxAudioFile & other) {
         // TODO: catch memory exception here
         buffer = new float[other.buffersize];
         
-        for( int n=0; n<buffersize; ++n ){
+        for( size_t n=0; n<buffersize; ++n ){
             this->buffer[n] = other.buffer[n];
         }
     }
