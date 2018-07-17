@@ -25,7 +25,7 @@ void ofApp::setup(){
     
     // audio setup for testing audio file stream 
 	ofSoundStreamSettings settings;
-    double sampleRate = 44100.0;
+    sampleRate = 44100.0;
     settings.setOutListener(this);
 	settings.sampleRate = sampleRate;
 	settings.numOutputChannels = 2;
@@ -136,6 +136,7 @@ void ofApp::keyPressed(int key){
         if (openFileResult.bSuccess){
             string filepath = openFileResult.getPath();            
             audiofile.load ( filepath );
+            step = audiofile.samplerate() / sampleRate;
             ofLogVerbose("file loaded");
         }else {
             ofLogVerbose("User hit cancel");

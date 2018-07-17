@@ -27,5 +27,8 @@ class ofApp: public ofBaseApp{
         double playhead;
         std::atomic<double> playheadControl;
         double step;
-        void audioOut(ofSoundBuffer & buffer);		
+        double sampleRate;
+        
+        void audioOut(ofSoundBuffer & buffer);	
+        	
 };
