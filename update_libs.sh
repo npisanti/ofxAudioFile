@@ -2,8 +2,8 @@
 
 directory=${PWD##*/}
 
-
-if [ $director=="ofxAudioFile" ]; then
+if [ "$directory" = "ofxAudioFile" ]
+then
 
     echo "ofxAudioFile libraries update"
 
