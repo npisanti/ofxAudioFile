@@ -117,7 +117,7 @@ void ofxAudioFile::load_wav( std::string path ){
     unsigned int sampleRate;
     drwav_uint64 totalSampleCount;
 
-    float* pSampleData =  drwav_open_and_read_file_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
+    float* pSampleData =  drwav_open_file_and_read_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading wav file\n";
@@ -139,7 +139,7 @@ void ofxAudioFile::load_mp3( std::string path ){
     drmp3_uint64 totalSampleCount;
     drmp3_config config;
     
-    float* pSampleData =  drmp3_open_and_decode_file_f32( path.c_str(), &config, &totalSampleCount);
+    float* pSampleData =  drmp3_open_file_and_read_f32( path.c_str(), &config, &totalSampleCount);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading mp3 file\n";
