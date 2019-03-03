@@ -201,9 +201,10 @@ void ofxAudioFile::load_ogg( std::string path ){
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
         if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
+
+        delete decoded;
     }else{
         std::cout<<"[ofxAudioFile] ERROR loading ogg/vorbis file\n";
     }
 
-    delete decoded;
 }
