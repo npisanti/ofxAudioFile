@@ -75,7 +75,7 @@ void ofxAudioFile::setVerbose(bool verbose){
 }
         
 void ofxAudioFile::free(){
-    delete buffer;    
+    if(buffer != nullptr) delete buffer;    
     filePath = "file not loaded";
     buffer = nullptr;
     nchannels = 0;
