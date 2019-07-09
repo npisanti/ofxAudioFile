@@ -9,4 +9,11 @@ As just standard c++ headers are needed for compiling this addon, it should be a
    
 Example app loads a mp3 file, or you can drag and drop files in the window if your platform let you do that.   
    
+Donate
+------------ 
+I support you, you support me!    
+If you find this code useful, consider [fueling me with coffee](https://ko-fi.com/npisanti)!
+   
+License 
+------------   
 As all those libraries are public domain, also this addon have an [unlicense](http://unlicense.org/).   
