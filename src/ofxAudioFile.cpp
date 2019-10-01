@@ -117,7 +117,7 @@ void ofxAudioFile::load_wav( std::string path ){
     unsigned int sampleRate;
     drwav_uint64 totalSampleCount;
 
-    float* pSampleData =  drwav_open_file_and_read_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
+    float* pSampleData =  drwav_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading wav file\n";
@@ -161,7 +161,7 @@ void ofxAudioFile::load_flac( std::string path ){
     unsigned int sampleRate;
     drflac_uint64 totalSampleCount;
 
-    float* pSampleData = drflac_open_and_decode_file_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
+    float* pSampleData = drflac_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount, NULL);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading FLAC file\n";
