@@ -137,7 +137,7 @@ void ofxAudioFile::load_wav( std::string path ){
 void ofxAudioFile::load_mp3( std::string path ){
 
     drmp3_uint64 totalSampleCount;
-    drmp3_config config;
+	drmp3_config config{ 0, 0 };
     
     float* pSampleData =  drmp3_open_file_and_read_f32( path.c_str(), &config, &totalSampleCount);
 
