@@ -1,4 +1,7 @@
 
+#ifndef OFXAUDIOFILE_H_DEFINED
+#define OFXAUDIOFILE_H_DEFINED
+
 #include <iostream>
 #include <string>
 
@@ -92,3 +95,5 @@ private:
     bool            verbose;
 
 };
+
+#endif // OFXAUDIOFILE_H_DEFINED
