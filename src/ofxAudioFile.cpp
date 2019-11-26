@@ -13,6 +13,7 @@
 #include "../libs/stb_vorbis.h"
 
 #include <algorithm>
+#include <cstring>
 
 ofxAudioFile::ofxAudioFile()  {
     filePath = "file not loaded";
@@ -92,7 +93,7 @@ bool ofxAudioFile::loaded() const{
 }
 
 
-// ------------------------- AUDIO LOADING ROTUINES ---------------------------
+// ------------------------- AUDIO LOADING ROUTINES ---------------------------
 void ofxAudioFile::load( std::string path ){
     std::string extension = path.substr(path.find_last_of(".") + 1 );
     std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);   
@@ -123,7 +124,9 @@ void ofxAudioFile::load_wav( std::string path ){
         std::cout<<"[ofxAudioFile] ERROR loading wav file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
-        buffer = pSampleData;
+        buffer = new float[totalSampleCount];
+        std::memcpy(buffer, pSampleData, totalSampleCount * sizeof(float));
+        drwav_free(pSampleData);
         this->sampleRate = sampleRate;
         this->buffersize = totalSampleCount;
         this->nchannels = channels;
@@ -136,20 +139,24 @@ void ofxAudioFile::load_wav( std::string path ){
 
 void ofxAudioFile::load_mp3( std::string path ){
 
-    drmp3_uint64 totalSampleCount;
+    drmp3_uint64 totalFrameCount;
+	size_t totalSampleCount;
+
 	drmp3_config config{ 0, 0 };
     
-    float* pSampleData =  drmp3_open_file_and_read_f32( path.c_str(), &config, &totalSampleCount);
-
+    float* pSampleData =  drmp3_open_file_and_read_f32( path.c_str(), &config, &totalFrameCount);
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading mp3 file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
-        buffer = pSampleData;
-        this->sampleRate = config.outputSampleRate;
         this->nchannels = config.outputChannels;
-        this->buffersize = totalSampleCount*this->nchannels;
-        this->slength = totalSampleCount;
+		totalSampleCount = (size_t) (totalFrameCount * this->nchannels);
+        buffer = new float[totalSampleCount];
+        std::memcpy(buffer, pSampleData, totalSampleCount * sizeof(float));
+        drmp3_free(pSampleData);
+        this->sampleRate = config.outputSampleRate;
+        this->buffersize = totalSampleCount;
+        this->slength = totalFrameCount;
         this->filePath = path;
         if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
     }
@@ -167,7 +174,9 @@ void ofxAudioFile::load_flac( std::string path ){
         std::cout<<"[ofxAudioFile] ERROR loading FLAC file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
-        buffer = pSampleData;
+        buffer = new float[totalSampleCount];
+        std::memcpy(buffer, pSampleData, totalSampleCount * sizeof(float));
+        drflac_free(pSampleData, NULL);
         this->sampleRate = sampleRate;
         this->buffersize = totalSampleCount;
         this->nchannels = channels;
