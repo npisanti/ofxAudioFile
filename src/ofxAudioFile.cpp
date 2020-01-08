@@ -116,20 +116,22 @@ void ofxAudioFile::load_wav( std::string path ){
     
     unsigned int channels;
     unsigned int sampleRate;
-    drwav_uint64 totalSampleCount;
+    drwav_uint64 totalFrameCount;
+    size_t totalSampleCount;
 
-    float* pSampleData =  drwav_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount);
+    float* pSampleData =  drwav_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalFrameCount);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading wav file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
+        this->nchannels = channels;
+        totalSampleCount = (size_t) (totalFrameCount * this->nchannels);
         buffer = new float[totalSampleCount];
         std::memcpy(buffer, pSampleData, totalSampleCount * sizeof(float));
         drwav_free(pSampleData);
         this->sampleRate = sampleRate;
         this->buffersize = totalSampleCount;
-        this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
         if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
@@ -166,20 +168,22 @@ void ofxAudioFile::load_flac( std::string path ){
     
     unsigned int channels;
     unsigned int sampleRate;
-    drflac_uint64 totalSampleCount;
+    drflac_uint64 totalFrameCount;
+    size_t totalSampleCount;
 
-    float* pSampleData = drflac_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalSampleCount, NULL);
+    float* pSampleData = drflac_open_file_and_read_pcm_frames_f32( path.c_str(), &channels, &sampleRate, &totalFrameCount, NULL);
 
     if ( pSampleData == NULL) {
         std::cout<<"[ofxAudioFile] ERROR loading FLAC file\n";
     }else{
         if(buffer!=nullptr){ delete buffer; }
+        this->nchannels = channels;
+        totalSampleCount = (size_t) (totalFrameCount * this->nchannels);
         buffer = new float[totalSampleCount];
         std::memcpy(buffer, pSampleData, totalSampleCount * sizeof(float));
         drflac_free(pSampleData, NULL);
         this->sampleRate = sampleRate;
         this->buffersize = totalSampleCount;
-        this->nchannels = channels;
         this->slength = this->buffersize / this->nchannels;
         this->filePath = path;
         if(verbose) std::cout<<"[ofxAudioFile] loading "<<this->filePath<<" | sample rate : "<< this->sampleRate <<" | channels : "<<this->nchannels<<" | length : "<<this->slength<<"\n";
